@@ -1,0 +1,31 @@
+! ==========================================================
+! Complete and Correct Configuration for Router R1
+! ==========================================================
+
+hostname R1
+
+! --- Interface connecting to the local LAN via Switch0 ---
+interface FastEthernet0/0
+ description Link to Switch0
+ ip address 192.168.10.1 255.255.255.0
+!
+! --- Interface for the Primary Path to R3 ---
+interface FastEthernet1/0
+ description Primary Path to R3
+ ip address 10.1.13.1 255.255.255.252
+ mtu 1500
+ bandwidth 100000
+!
+! --- Interface for the Backup Path to R2 ---
+interface FastEthernet1/1
+ description Backup Path Link to R2
+ ip address 10.1.12.1 255.255.255.252
+ mtu 1500
+ bandwidth 100000
+!
+! --- Routing Protocol Configuration (OSPF) ---
+router ospf 1
+ network 192.168.10.0 0.0.0.255 area 0
+ network 10.1.13.0 0.0.0.3 area 0
+ network 10.1.12.0 0.0.0.3 area 0
+!

@@ -1,0 +1,29 @@
+! ==========================================================
+! Complete Configuration for Router R2
+! ==========================================================
+
+hostname R2
+
+!
+! --- Interface for the Backup Path to R1 ---
+!
+interface FastEthernet1/1
+ description Backup Path Link to R1
+ ip address 10.1.12.2 255.255.255.252
+ mtu 1500
+ bandwidth 100000
+!
+! --- Interface for the Backup Path to R3 ---
+!
+interface FastEthernet1/0
+ description Backup Path Link to R3
+ ip address 10.1.23.1 255.255.255.252
+ mtu 1500
+ bandwidth 100000
+!
+! --- Routing Protocol Configuration (OSPF) ---
+!
+router ospf 1
+ network 10.1.12.0 0.0.0.3 area 0
+ network 10.1.23.0 0.0.0.3 area 0
+!
